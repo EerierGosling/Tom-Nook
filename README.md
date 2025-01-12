@@ -4,7 +4,7 @@ Tom Nook is a character from Animal Crossing, a game I love. I thought it'd be f
 
 When you join my channel, Tom Nook greets you and "forces you" to buy something from his shop. You type in what you want and he sells it to you for a randomly generated amount of bells, which you pay by replying with emojis totaling to that amount.
 
-Try him out by joining ([#eeriergosling](https://hackclub.slack.com/archives/C06V73WGACB))!
+Try him out by joining [#eeriergosling](https://hackclub.slack.com/archives/C06V73WGACB)!
 
 <img width="573" alt="Screenshot 2025-01-12 at 3 38 19 PM" src="https://github.com/user-attachments/assets/534bb878-6a58-4a6e-8116-167d0a06df29" />
 <img width="476" alt="Screenshot 2025-01-12 at 3 39 58 PM" src="https://github.com/user-attachments/assets/7012b92b-61e6-4a9d-af30-6dc7e3180563" />
