@@ -150,12 +150,12 @@ def handle_item_submission(ack, body, client, view, logger):
     client.chat_postMessage(
         channel=channel_id,
         thread_ts=ts,
-        text=f"sure, i’ll sell you a `{threads[ts]["item"]}`! that’ll be...... {threads[ts]["cost"]} bells. pay up! :grin:"
+        text=f"sure, i’ll sell you a `{threads[ts]['item']}`! that’ll be...... {threads[ts]['cost']} bells. pay up! :grin:"
     )
     client.chat_postMessage(
         channel=channel_id,
         thread_ts=ts,
-        text=f"replying with :ac-bells: (1,000) and :acnh_bells_100: (100) will suffice - send enough to add up to {threads[ts]["cost"]} :grin::grin::grin::grin:"
+        text=f"replying with :ac-bells: (1,000) and :acnh_bells_100: (100) will suffice - send enough to add up to {threads[ts]['cost']} :grin::grin::grin::grin:"
     )
     ack()
 
