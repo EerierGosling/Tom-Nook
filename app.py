@@ -58,7 +58,8 @@ def welcome(event, say):
         text=text
     )
 
-    threads[response["message"]["ts"]] = {"user": user_id, "item": None, "spent": 0, "cost": random.randint(1, 100)*100}
+    if response["message"]["ts"] not in threads:
+        threads[response["message"]["ts"]] = {"user": user_id, "item": None, "spent": 0, "cost": random.randint(1, 100)*100}
 
 @app.action("button_click")
 def open_modal(ack, body, client):
