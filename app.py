@@ -182,10 +182,10 @@ def message_pay(message, say):
         threads.pop(ts)
 
 @app.command("/tom-nook")
-def repeat_text(ack, respond, command):
+def repeat_text(ack, say, command):
     # Acknowledge command request
     ack()
-    start_shop(respond, command["channel_id"], command["user_id"], in_channel=True)
+    start_shop(say, command["channel_id"], command["user_id"], in_channel=True)
 
 def start_shop(say, channel, user_id, in_channel=False):
 
@@ -220,7 +220,7 @@ def start_shop(say, channel, user_id, in_channel=False):
             }
         ],
         text=text,
-        response_type="in_channel"
+        channel=channel
     )
 
     if response["message"]["ts"] not in threads:
