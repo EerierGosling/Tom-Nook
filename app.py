@@ -35,7 +35,7 @@ def open_modal(ack, body, client):
     if user_id != clicked_user_id:
         ack()
         client.chat_postEphemeral(
-            channel = channel_id,
+            channel = threads[ts]["channel"],
             user = clicked_user_id,
             text = f"you aren't <@{user_id}>! you can't buy stuff for them!"
         )
