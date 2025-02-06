@@ -134,8 +134,8 @@ def handle_item_submission(ack, body, client, view, logger):
 @app.event("message")
 def message_pay(message, say):
 
-    if message["channel"] == shop_id:
-        start_shop(say, message["channel"], message["user"])
+    # if message["channel"] == shop_id:
+    #     start_shop(say, message["channel"], message["user"])
 
     if "thread_ts" not in message:
         return
