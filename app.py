@@ -181,7 +181,9 @@ def message_pay(message, say):
         )
         threads.pop(ts)
 
-
+@app.command("/tom-nook")
+def slash_command(req, ctx):
+    start_shop(ctx["say"], ctx["channel_id"], ctx["user_id"])
 
 def start_shop(say, channel, user_id):
 
@@ -219,7 +221,7 @@ def start_shop(say, channel, user_id):
     )
 
     if response["message"]["ts"] not in threads:
-        threads[response["message"]["ts"]] = { "channel": channel, "user": user_id, "item": None, "spent": 0, "cost": random.randint(1, 100)*100}
+        threads[response["message"]["ts"]] = { "channel": channel, "user": user_id, "item": None, "spent": 0, "cost": random.randint(1, 100)*100 }
 
 # Start your app
 if __name__ == "__main__":
