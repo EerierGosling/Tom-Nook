@@ -10,6 +10,7 @@ load_dotenv()
 app = App(token=os.getenv("SLACK_BOT_TOKEN"))
 
 channel_id = "C06V73WGACB"
+shop_id = "C08C5TPLWTD"
 
 threads = {}
 
@@ -21,45 +22,12 @@ threads = {}
 def welcome(event, say):
     channel = event["channel"]
 
-    if channel != channel_id:
+    if channel not in [channel_id, shop_id]:
         print("not the right channel")
         print(channel)
         return
     
-    user_id = event["user"]
-
-    text = f"welcome <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want"
-
-    response = say(
-        blocks = [
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": text,
-                }
-            },
-            {
-                "type": "actions",
-                "elements": [
-                    {
-                        "type": "button",
-                        "style": "primary",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "buy something.",
-                            "emoji": True
-                        },
-                        "action_id": "button_click"
-                    }
-                ]
-            }
-        ],
-        text=text
-    )
-
-    if response["message"]["ts"] not in threads:
-        threads[response["message"]["ts"]] = {"user": user_id, "item": None, "spent": 0, "cost": random.randint(1, 100)*100}
+    start_shop(say, event["channel"], event["user"])
 
 @app.action("button_click")
 def open_modal(ack, body, client):
@@ -127,10 +95,13 @@ def handle_item_submission(ack, body, client, view, logger):
 
     user_id = threads[ts]["user"]
 
-    text = f"welcome <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want\n\n<@{user_id}> clicked *buy stuff (this is mandatory.)*"
+    if threads[ts]["channel"] == channel_id:
+        text = f"welcome <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want\n\n<@{user_id}> clicked *buy stuff (this is mandatory.)*"
+    else:
+        text = f"hello <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want\n\n<@{user_id}> clicked *buy stuff (this is mandatory.)*"
 
     client.chat_update(
-        channel=channel_id,
+        channel=threads[ts]["channel"],
         ts=body["view"]["private_metadata"],
         blocks = [
             {
@@ -149,12 +120,12 @@ def handle_item_submission(ack, body, client, view, logger):
     ack()
 
     client.chat_postMessage(
-        channel=channel_id,
+        channel=threads[ts]["channel"],
         thread_ts=ts,
         text=f"sure, i’ll sell you a `{threads[ts]['item']}`! that’ll be...... {threads[ts]['cost']} bells. pay up! :grin:"
     )
     client.chat_postMessage(
-        channel=channel_id,
+        channel=threads[ts]["channel"],
         thread_ts=ts,
         text=f"replying with :ac-bells: (1,000) and :acnh_bells_100: (100) will suffice - send enough to add up to {threads[ts]['cost']} :grin::grin::grin::grin:"
     )
@@ -162,6 +133,9 @@ def handle_item_submission(ack, body, client, view, logger):
 
 @app.event("message")
 def message_pay(message, say):
+
+    if message["channel"] == shop_id:
+        start_shop(say, message["channel"], message["user"])
 
     if "thread_ts" not in message:
         return
@@ -186,14 +160,14 @@ def message_pay(message, say):
 
     if spent < cost:
         say(
-            channel=channel_id,
+            channel=threads[ts]["channel"],
             thread_ts=ts,
             text=f"you’ve spent {spent} bells so far - keep going! i need {cost} bells :grin:"
         )
 
     elif spent > cost:
         say(
-            channel=channel_id,
+            channel=threads[ts]["channel"],
             thread_ts=ts,
             text=f"here's your `{item}`! _thanks for the extra {spent-cost} bells..._"
         )
@@ -201,13 +175,51 @@ def message_pay(message, say):
 
     else:
         say(
-            channel=channel_id,
+            channel=threads[ts]["channel"],
             thread_ts=ts,
             text=f"here's your `{item}`! thanks for the purchase! :grin:"
         )
         threads.pop(ts)
 
 
+
+def start_shop(say, channel, user_id):
+
+    if channel == channel_id:
+        text = f"welcome <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want"
+    else:
+        text = f"hello <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want"
+
+    response = say(
+        blocks = [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": text,
+                }
+            },
+            {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
+                        "style": "primary",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "buy something.",
+                            "emoji": True
+                        },
+                        "action_id": "button_click"
+                    }
+                ]
+            }
+        ],
+        text=text
+    )
+
+    if response["message"]["ts"] not in threads:
+        threads[response["message"]["ts"]] = { "channel": channel, "user": user_id, "item": None, "spent": 0, "cost": random.randint(1, 100)*100}
 
 # Start your app
 if __name__ == "__main__":
