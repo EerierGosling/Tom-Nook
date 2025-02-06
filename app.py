@@ -89,9 +89,9 @@ def handle_item_submission(ack, body, client, view, logger):
     user_id = threads[ts]["user"]
 
     if threads[ts]["channel"] == channel_id:
-        text = f"welcome <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want\n\n<@{user_id}> clicked *buy stuff (this is mandatory.)*"
+        text = f"welcome <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want\n\n<@{user_id}> clicked *buy something.*"
     else:
-        text = f"hello <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want\n\n<@{user_id}> clicked *buy stuff (this is mandatory.)*"
+        text = f"hello <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want\n\n<@{user_id}> clicked *buy something.*"
 
     client.chat_update(
         channel=threads[ts]["channel"],
