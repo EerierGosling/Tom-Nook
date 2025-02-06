@@ -6,7 +6,6 @@ import random
 
 load_dotenv()
 
-# Initializes your app with your bot token and socket mode handler
 app = App(token=os.getenv("SLACK_BOT_TOKEN"))
 
 channel_id = "C06V73WGACB"
@@ -14,24 +13,18 @@ shop_id = "C08C5TPLWTD"
 
 threads = {}
 
-# Listens to incoming messages that contain "hello"
-# To learn available listener arguments,
-# visit https://tools.slack.dev/bolt-python/api-docs/slack_bolt/kwargs_injection/args.html
 
 @app.event("member_joined_channel")
 def welcome(event, say):
     channel = event["channel"]
 
     if channel not in [channel_id, shop_id]:
-        print("not the right channel")
-        print(channel)
         return
     
     start_shop(say, event["channel"], event["user"])
 
 @app.action("button_click")
 def open_modal(ack, body, client):
-    # Acknowledge the command request
 
     ts = body["message"]["ts"]
 
