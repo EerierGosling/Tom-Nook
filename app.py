@@ -108,7 +108,7 @@ def handle_item_submission(ack, body, client, view, logger):
         text=text
     )
 
-    threads[ts]["item"] = item
+    threads[ts]["item"] = item.replace("`", "")
 
     ack()
 
