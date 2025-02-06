@@ -182,8 +182,10 @@ def message_pay(message, say):
         threads.pop(ts)
 
 @app.command("/tom-nook")
-def slash_command(req, ctx):
-    start_shop(ctx["say"], ctx["channel_id"], ctx["user_id"])
+def repeat_text(ack, respond, command):
+    # Acknowledge command request
+    ack()
+    start_shop(respond, command["channel_id"], command["user_id"])
 
 def start_shop(say, channel, user_id):
 
