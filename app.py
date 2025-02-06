@@ -185,9 +185,9 @@ def message_pay(message, say):
 def repeat_text(ack, respond, command):
     # Acknowledge command request
     ack()
-    start_shop(respond, command["channel_id"], command["user_id"])
+    start_shop(respond, command["channel_id"], command["user_id"], in_channel=True)
 
-def start_shop(say, channel, user_id):
+def start_shop(say, channel, user_id, in_channel=False):
 
     if channel == channel_id:
         text = f"welcome <@{user_id}>!\n\ngimme all your hard-earned bells :acnh_bells_100::ac-bells: and i’ll sell you something you (might) want"
@@ -219,7 +219,8 @@ def start_shop(say, channel, user_id):
                 ]
             }
         ],
-        text=text
+        text=text,
+        response_type="in_channel"
     )
 
     if response["message"]["ts"] not in threads:
