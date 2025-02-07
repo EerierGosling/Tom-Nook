@@ -219,6 +219,5 @@ def start_shop(say, channel, user_id, in_channel=False):
     if response["message"]["ts"] not in threads:
         threads[response["message"]["ts"]] = { "channel": channel, "user": user_id, "item": None, "spent": 0, "cost": random.randint(1, 100)*100 }
 
-# Start your app
 if __name__ == "__main__":
     SocketModeHandler(app, os.getenv("SLACK_APP_TOKEN")).start()
