@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  tom-nook-bot:
+    build: .
+    container_name: tom-nook-bot
+    environment:
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - SLACK_APP_TOKEN=${SLACK_APP_TOKEN}
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: python app.py
