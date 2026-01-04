@@ -4,8 +4,6 @@ Tom Nook is a character from Animal Crossing, a game I love. I thought it'd be f
 
 When you join my channel, Tom Nook greets you and "forces you" to buy something from his shop. You type in what you want and he sells it to you for a randomly generated amount of bells, which you pay by replying with emojis totaling to that amount.
 
-Tom Nook is written in Python using Bolt and is hosted on [Nest](https://hackclub.app).
-
 Try him out by joining [#eeriergosling](https://hackclub.slack.com/archives/C06V73WGACB)!
 
 <img width="573" alt="Screenshot 2025-01-12 at 3 38 19 PM" src="https://github.com/user-attachments/assets/534bb878-6a58-4a6e-8116-167d0a06df29" />
